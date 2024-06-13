@@ -1,0 +1,64 @@
+import tkinter as tk
+from tkinter import messagebox
+
+class ToDoListApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Lista de Tarefas")
+
+        # Lista de tarefas
+        self.tasks = []
+
+        # Configuração da interface gráfica
+        self.create_widgets()
+
+    def create_widgets(self):
+        # Rótulo para entrada de tarefa
+        self.task_label = tk.Label(self.root, text="Digite uma nova tarefa:")
+        self.task_label.pack(pady=5)
+
+        # Entrada para nova tarefa
+        self.task_entry = tk.Entry(self.root, width=40)
+        self.task_entry.pack(pady=5)
+
+        # Botão para adicionar tarefa
+        self.add_task_button = tk.Button(self.root, text="Adicionar Tarefa", command=self.add_task)
+        self.add_task_button.pack(pady=5)
+
+        # Listbox para exibir as tarefas
+        self.tasks_listbox = tk.Listbox(self.root, width=50, height=10)
+        self.tasks_listbox.pack(pady=5)
+
+        # Botão para remover tarefa
+        self.remove_task_button = tk.Button(self.root, text="Remover Tarefa", command=self.remove_task)
+        self.remove_task_button.pack(pady=5)
+
+    def add_task(self):
+        task = self.task_entry.get()
+        if task:
+            self.tasks.append(task)
+            self.update_tasks_listbox()
+            self.task_entry.delete(0, tk.END)
+        else:
+            messagebox.showwarning("Entrada vazia", "Digite uma tarefa antes de adicionar.")
+
+    def remove_task(self):
+        try:
+            selected_task_index = self.tasks_listbox.curselection()[0]
+            del self.tasks[selected_task_index]
+            self.update_tasks_listbox()
+        except IndexError:
+            messagebox.showwarning("Nenhuma seleção", "Selecione uma tarefa para remover.")
+
+    def update_tasks_listbox(self):
+        self.tasks_listbox.delete(0, tk.END)
+        for task in self.tasks:
+            self.tasks_listbox.insert(tk.END, task)
+
+def main():
+    root = tk.Tk()
+    app = ToDoListApp(root)
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()

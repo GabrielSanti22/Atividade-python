@@ -1,0 +1,33 @@
+import random    
+
+def jogar():
+    numero_secreto = random.radint(1, 100)
+    tentativas = 0
+    max_tentativas = 10
+    
+    print("Bem-Vindo ao jogo de Advinhão!")
+    print("Eu escolhi um número entre 1 e 100. tente adivinhar!")
+    
+    while tentativas < max_tentativas:
+        try:
+            palpite = int(input(f"Tentativa {tentativas + 1} de {max_tentativas}. Digite seu palpite: "))
+            
+            if palpite < 1 or palpite > 100: 
+                print("Por favor, digite um número entre 1 e 100.")
+                continue
+            tentativas += 1
+            
+            if palpite < numero_secreto:
+                print("O número secreto é maior do que isso.")
+            elif palpite > numero_secreto: 
+                print("O número secreto é menor do que isso.")
+            else:
+                print(f"Parabéns! Você adivinhou o numero em {tentativas} tentativas!")
+                break
+            
+        except ValueError:
+            print("Entrada inválida. Por favor, digite um número inteiro.")
+            
+        print("Obrigado por jogar!") 
+# iniciar o jogo
+jogar()
